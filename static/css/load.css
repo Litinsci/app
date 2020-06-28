@@ -1,0 +1,127 @@
+body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background: #222;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    animation: form-fly-up 0.45s ease;
+   }
+ 
+ .module-border-wrap {
+    max-width: 250px;
+    padding: 1rem;
+    position: relative;
+    background: linear-gradient(to right, red, purple);
+    padding: 2px;
+    margin: 30px 0 20px 0;
+    border-radius: 25px;
+   }
+ 
+ .module {
+    background: #222;
+    color: #fff;
+    padding: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    font-style: bold;
+   }
+   i{
+      color: #fff;
+   }
+   h3{
+    margin-left:30px;
+    font-style: bold;
+    /* margin-bottom: -300px; */
+    /* padding-bottom: -300px; */
+   }
+   .module-border-wrap:hover{
+     cursor: pointer;
+   }
+    main{
+     /* margin-top: 20px; */
+     height: 450px;
+   }
+/* для регистрации */
+.to_reg{
+   display: flex;
+   flex-direction: row;
+   /* animation: form-fly-up 0.8s ease; */
+}
+.come_in{
+   min-width: 150px;
+}
+.btn_back{
+   display: none;
+   margin-right: 10px;
+   /* animation: form-fly-up 0.8s ease; */
+}
+.btn_back1{
+   display: none;
+   margin-right: 10px;
+}
+.reg_contain{
+   display: none;
+   flex-direction: column;
+   align-items: center;
+   justify-content: space-around;
+   animation: form-fly-up 0.8s ease;
+}
+.come_in_contain{
+   display: none;
+   flex-direction: column;
+   align-items: center;
+   justify-content: space-around;
+   animation: form-fly-up 0.8s ease;
+}
+.reg_contain input{
+   margin: 10px;
+   padding: 15px;
+   width: 250px;
+   border: 0px;
+   border-radius: 10px;
+   background: rgba(85, 83, 83, 0.356);
+   color: #fff;
+   outline:none;
+}
+.come_in_contain input{
+   margin: 10px;
+   padding: 15px;
+   width: 250px;
+   border: 0px;
+   border-radius: 10px;
+   background: rgba(85, 83, 83, 0.356);
+   color: #fff;
+   outline:none;
+}
+.form_come_in{
+   display: flex;
+   flex-direction: row;
+}
+.come_in_btn{
+   animation: form-fly-up 0.8s ease;
+}
+.anim{
+   animation: form-fly-up 0.8s ease;
+}
+.wrap1{
+   display: none;
+}
+.come_in_btn1{
+   display: none;
+}
+.come_in1{
+   display: flex;
+   min-width: 150px;
+}
+@keyframes form-fly-up {
+   0% { transform: translateY(500px); }
+   50% { transform: translateY(-50px); }
+   100% { transform: translateY(0); }
+}
