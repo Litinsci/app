@@ -19,55 +19,12 @@ var
 
     let [addit_word_btn,answer_word_btn] = [document.getElementById("addit_word_btn"),document.getElementById("answer_word_btn")];
     var [ru_word,en_word] = [document.getElementById("ru_word"),document.getElementById("en_word")];
-function showHide() {
-  if (arguments[0].style.display == "none") {
-    for (let element of arguments) {
-      element.style.display = "block";
-    }
-  } else {
-  for (let element of arguments) {
-    element.style.display = "none";
-     }
-  }
-}
 
 
-function showHide_flex() {
-  if (arguments[0].style.display == "none") {
-    for (let element of arguments) {
-      element.style.display = "flex";
-    }
-  } else {
-  for (let element of arguments) {
-      element.style.display = "none";
-     }
-  }
-}
+  let main_block = document.querySelector("main"),
+      counter_answers = document.getElementById("counter");
+  let [correct_answer,wrong_answer,counter_answer_true = 0,counter_answer_false = 0] =[document.getElementById("true"),document.getElementById("false")]
 
-
-const togle_animate = function(){
-    for (let element of arguments) {
-      element.classList.toggle("active");
-    }
-  }
-
-
-function load_page(){
-  let name = document.querySelector(".username_bar").innerHTML;
-  $.ajax({
-    type: "POST",
-    url: "/onload_wod",
-    data: { name:name},
-    type: 'POST',
-    success: function(response) {
-      ru_word.value = response.ru;
-      // en_word.value = response.en;
-    },
-    error: function(error) {
-        console.log(error);
-    }
-});
-}
   
 
 en_word.onkeyup = function () {
@@ -89,9 +46,6 @@ ru_word.onkeyup = function () {
 
 
 
-
-
-
 //````dom movies````
 exit.onclick = function  () {
   document.location.replace("/unsetsession");
@@ -100,7 +54,9 @@ exit.onclick = function  () {
 
 hide_panel.onclick = function (){
   icons.style.display = "none";
-  header.style.width = "75px";
+  header.style.width = "7%";
+  main_block.style.cssText = "margin: 10% 15% 5% 33%";
+  counter_answers.style.cssText = "margin: 10% 15% 5% 33%";
   showHide_flex(list);
   showHide_flex(icons);
 }
@@ -108,6 +64,8 @@ hide_panel.onclick = function (){
 
 fa_ellipsis_h.onclick = function (){
   header.style.width = "20%";
+  main_block.style.cssText = "margin: 10% 15% 5% 20%";
+  counter_answers.style.cssText = "margin: 10% 15% 5% 20%";
   showHide_flex(list);
   showHide_flex(icons);
 }
@@ -134,10 +92,18 @@ to_add_words_btn.onclick = function(){
 }
 
 // кнопка отправки ответа
-let [correct_answer,wrong_answer,counter_answer_true = 0,counter_answer_false = 0] =[document.getElementById("true"),document.getElementById("false")]
 
 
 // fuck this function
+Array.prototype.remByVal = function(val) {
+  for (var i = 0; i < this.length; i++) {
+      if (this[i] === val) {
+          this.splice(i, 1);
+          i--;
+      }
+  }
+  return this;
+}
 let num1 = [0,1,2,3,4,5,6,7,8,9,10],
     num2 = [0];
 const rand = max => {
@@ -147,6 +113,8 @@ const rand = max => {
 let difference = (num1,num2) =>{
   num1.filter(x => !num2.includes(x));
 }
+let onlyUnique = (value, index, self) =>  self.indexOf(value) === index;
+
 let same_nambers = rand(num1.length);
 
 answer_word_btn.onclick = function () {
@@ -183,7 +151,8 @@ answer_word_btn.onclick = function () {
         continue;
       } else {
         num2.push(same_nambers);
-        difference(num1,num2);
+        num1.remByVal(same_nambers);
+        difference(num1,num2.filter(onlyUnique));
         console.log(`${num2} массив вычетания`);
         console.log(`${num1} вычтенный массив`);
         break;
