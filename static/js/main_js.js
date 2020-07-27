@@ -1,3 +1,4 @@
+
 var
     header= document.querySelector(".bar"),
     list = document.querySelector(".list"),
@@ -93,32 +94,16 @@ to_add_words_btn.onclick = function(){
 
 // кнопка отправки ответа
 
-
-// fuck this function
-Array.prototype.remByVal = function(val) {
-  for (var i = 0; i < this.length; i++) {
-      if (this[i] === val) {
-          this.splice(i, 1);
-          i--;
-      }
-  }
-  return this;
-}
-let num1 = [0,1,2,3,4,5,6,7,8,9,10],
+let num1 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14],
     num2 = [0];
-const rand = max => {
-  return Math.floor(Math.random() * Math.floor(max));
-}
-// let difference = num1.filter(x => !num2.includes(x));
-let difference = (num1,num2) =>{
-  num1.filter(x => !num2.includes(x));
-}
-let onlyUnique = (value, index, self) =>  self.indexOf(value) === index;
-
+let length_arr_num1= num1.length;
+const forRand = length_arr_num1;
 let same_nambers = rand(num1.length);
 
 answer_word_btn.onclick = function () {
   // console.log(difference);
+  length_arr_num1= num1.length;
+  same_nambers = rand(num1.length);
   let ru,en,name;
   ru = ru_word.value;
   en = en_word.value;
@@ -141,26 +126,19 @@ answer_word_btn.onclick = function () {
         console.log(error);
     }
   });
-  if (num1.length == num2.length) {
+  if (num1.length < 3 ) {
     alert("f u!");
-  }else{
-    for (let ellement of  num2) {
-      same_nambers = rand(num1.length);
-      if (ellement == same_nambers) {
-        console.log(`${same_nambers} уже в массиве`);
-        continue;
-      } else {
-        num2.push(same_nambers);
-        num1.remByVal(same_nambers);
-        difference(num1,num2.filter(onlyUnique));
-        console.log(`${num2} массив вычетания`);
-        console.log(`${num1} вычтенный массив`);
-        break;
-      }
-      
-     }
-    }
+  }
+  else{
+  RundOfArrays(num1,num2,forRand)
+     console.log(`${num1} массив 1 его длинна ${num1.length}`);
+     console.log(`${num2} массив 2 его длинна ${num2.length}`);
+    //  console.log(`выпавшее число ${same_nambers}`);
+  }
+    
 }
+
+// console.log(contains(num2,11));
 // кнопка отправки добавления слов
 addit_word_btn.onclick = function () {
   let ru,en,name;
