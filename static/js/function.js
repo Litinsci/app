@@ -120,7 +120,7 @@ const first_answer = () => {
       data: { name:name,ru_word: ru, en_word: en},
       type: 'POST',
       success: function(response) {
-        if (this.answer == "true") {
+        if (response.answer == "true") {
           counter_answer_true++;
           correct_answer.innerHTML = counter_answer_true;
         } else {
@@ -135,10 +135,13 @@ const first_answer = () => {
         }
         const forRand = response.length_array_word;
         console.log(num1);
-        console.log(forRand);
+        // console.log(forRand);
         if ( num1.length == 0) {
                 // RundOfArrays(num1,num2,forRand)
               alert(`${name} ваш словарь закончился!`);
+            //   break;
+            counter_answer_true--;
+            correct_answer.innerHTML = counter_answer_true;
         }
         else{
             RundOfArrays(num1,num2,forRand)

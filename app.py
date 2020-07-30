@@ -71,9 +71,6 @@ def add_words():
   id_users = cur.execute("SELECT id FROM users WHERE name=?", (name,)).fetchone()[0]
   cur.execute("INSERT INTO words(id_user,rus,eng) VALUES(?,?,?)", (int(id_users),ru_word,en_word,))
   con.commit()
-  # print(id_users)
-  # response = jsonify({'name': id_users})
-  # return response
   
 
 @app.route('/onload_wod',methods=['POST'])
@@ -98,7 +95,6 @@ def answer():
   cur = con.cursor()
   id_users = cur.execute("SELECT id FROM users WHERE name=?", (name,)).fetchone()[0]
   length_array_word  = len(cur.execute("SELECT * FROM words WHERE id_user=?", (id_users,)).fetchall())
-  # print(length_array_word)
   if cur.execute("SELECT 1 FROM words WHERE id_user = ? AND rus = ? AND eng = ?", (int(id_users),ru_word,en_word,)).fetchone():
     response = jsonify({ 'answer' : "true",
                           'length_array_word' :length_array_word })
@@ -113,16 +109,12 @@ def answer():
 # ````````
 @app.route('/next_answer', methods=['POST'])
 def next_answer():
-  # ru_word = str(request.form['ru_word'])
-  # en_word = str(request.form['en_word'])
   name = str(request.form['name'])
   id_word = str(request.form['id_word'])
   con = sqlite3.connect(db)
   cur = con.cursor()
-  print(name)
+ 
   id_users = cur.execute("SELECT id FROM users WHERE name=?", (name,)).fetchone()[0]
-  # length_array_word  = len(cur.execute("SELECT * FROM words WHERE id_user=?", (id_users,)).fetchall())
-  # print(length_array_word)
   next_word = cur.execute("SELECT rus FROM words WHERE id_user = ? AND id_words = ?", (int(id_users),int(id_word),)).fetchone()[0]
   response = jsonify({ 'next_word' : next_word})
   return response 
