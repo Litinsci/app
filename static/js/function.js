@@ -83,29 +83,95 @@ const removeItem = (array, item) =>{
 // ````` try`````
 // ````` fuck this function ``````
 
-function RundOfArrays(arr1,arr2,length_arr_num1) {
+const RundOfArrays = (arr1,arr2,length_arr_num1) => {
     
     let same_nambers = rand(length_arr_num1);
     // console.log(`выпавшее число ${same_nambers}`);
     if ((contains(arr1,same_nambers)==true) && (contains(num2,same_nambers)== false)) {
         arr1.remByVal(same_nambers);
         arr2.push(same_nambers);
-        return;
-    } else {
+        return same_nambers;
+    } 
+    else if (arr1.length<2) {
+        same_nambers = arr1[0];
+        arr1.remByVal(same_nambers);
+        arr2.push(same_nambers);
+        return same_nambers;
+    }
+    else {
         // RundOfArrays(arr1,arr2);
         setTimeout(RundOfArrays(arr1,arr2,length_arr_num1),1000);
     }
 }
+// answer word function
+const take_arrays_to_words = (arrays,length_array_word) =>{
+    for (let i = 1; i < length_array_word; i++) {
+        arrays.push(i);
+      }
+}
+const first_answer = () => {
+    let ru,en,name;
+    ru = ru_word.value;
+    en = en_word.value;
+    name = document.querySelector(".username_bar").innerHTML;
+    $.ajax({
+      type: "POST",
+      url: "/answer",
+      data: { name:name,ru_word: ru, en_word: en},
+      type: 'POST',
+      success: function(response) {
+        if (this.answer == "true") {
+          counter_answer_true++;
+          correct_answer.innerHTML = counter_answer_true;
+        } else {
+          counter_answer_false++;
+          wrong_answer.innerHTML = counter_answer_false;
+        }
+        answer_word_btn.classList.add("new_answer_word_btn");
+        new_answer_btn = document.querySelector(".new_answer_word_btn");
+        if (contrl_to_answer == 0) {
+            take_arrays_to_words(num1,response.length_array_word);
+            contrl_to_answer++;      
+        }
+        const forRand = response.length_array_word;
+        console.log(num1);
+        console.log(forRand);
+        if ( num1.length == 0) {
+                // RundOfArrays(num1,num2,forRand)
+              alert(`${name} ваш словарь закончился!`);
+        }
+        else{
+            RundOfArrays(num1,num2,forRand)
+
+            let next_word = num2[num2.length - 1];
+            next_answer(next_word,name);
+            // console.log(`${num1} массив 1 его длинна ${num1.length}`);
+            // console.log(`${num2} массив 2 его длинна ${num2.length}`);
+            
+        }
+      },
+      error: function(error) {
+          console.log(error);
+      }
+    });
+    
+}
 
 
-
-// var numPool = [ 13, 21, 36, 14, 27, 10 ];
-
-// function shuffle(numPool) {
-//   for(var j, x, i = numPool.length; i; j = parseInt(Math.random() * i), x = numPool[--i], numPool[i] = numPool[j], numPool[j] = x);
-//   return numPool;
-// };
-// var randomResult = shuffle(numPool);
-// while( randomResult.length > 0 ) {
-//   console.log( randomResult.pop() );
-// }
+const next_answer = (next_word,name) => {
+    this.next_word = next_word;
+    this.name = name ;
+    $.ajax({
+        type: "POST",
+        url: "/next_answer",
+        data: { name:name,id_word: next_word},
+        type: 'POST',
+        success: function(response) {
+          console.log(response.next_word)
+          ru_word.value = response.next_word;
+        },
+        error: function(error) {
+            console.log(error);
+        }
+      });
+}

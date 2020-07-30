@@ -89,54 +89,27 @@ to_add_words_btn.onclick = function(){
   togle_animate(to_add_words,test_list,addit_word_btn,answer_word_btn,ru_word,en_word);
   addit_word_btn.setAttribute("disabled", "true");
   answer_word_btn.removeAttribute("disabled");
+  en_word.value = "";
   load_page();
 }
 
 // кнопка отправки ответа
 
-let num1 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14],
-    num2 = [0];
-let length_arr_num1= num1.length;
-const forRand = length_arr_num1;
-let same_nambers = rand(num1.length);
+let num1 = [0], num2=[0];//массивы для индексов слов и ответов
+let forRand; //для функции определеняи рандомного числа в массиве
+let contrl_to_answer = 0;//контроль срабатывания функции
+let new_answer_btn;//`кнопка нового ответа`
 
+// Кнопка ответа через #ID
 answer_word_btn.onclick = function () {
-  // console.log(difference);
-  length_arr_num1= num1.length;
-  same_nambers = rand(num1.length);
-  let ru,en,name;
-  ru = ru_word.value;
-  en = en_word.value;
-  name = document.querySelector(".username_bar").innerHTML;
-  $.ajax({
-    type: "POST",
-    url: "/answer",
-    data: { name:name,ru_word: ru, en_word: en},
-    type: 'POST',
-    success: function(response) {
-      if (response.answer == "true") {
-        counter_answer_true++;
-        correct_answer.innerHTML = counter_answer_true;
-      } else {
-        counter_answer_false++;
-        wrong_answer.innerHTML = counter_answer_false;
-      }
-    },
-    error: function(error) {
-        console.log(error);
-    }
-  });
-  if (num1.length < 3 ) {
-    alert("f u!");
-  }
-  else{
-  RundOfArrays(num1,num2,forRand)
-     console.log(`${num1} массив 1 его длинна ${num1.length}`);
-     console.log(`${num2} массив 2 его длинна ${num2.length}`);
-    //  console.log(`выпавшее число ${same_nambers}`);
-  }
-    
+  first_answer();
+  // console.clear();
 }
+
+
+
+
+
 
 // console.log(contains(num2,11));
 // кнопка отправки добавления слов
@@ -166,4 +139,5 @@ addit_word_btn.onclick = function () {
 
 window.onload = function(){
   load_page();
+  console.clear();
 }
