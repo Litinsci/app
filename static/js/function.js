@@ -1,4 +1,4 @@
-
+;
 function showHide() {
     if (arguments[0].style.display == "none") {
         for (let element of arguments) {
@@ -99,7 +99,6 @@ const RundOfArrays = (arr1,arr2,length_arr_num1) => {
         return same_nambers;
     }
     else {
-        // RundOfArrays(arr1,arr2);
         setTimeout(RundOfArrays(arr1,arr2,length_arr_num1),1000);
     }
 }
@@ -109,7 +108,7 @@ const take_arrays_to_words = (arrays,length_array_word) =>{
         arrays.push(i);
       }
 }
-const first_answer = () => {
+const first_answer = (num1,num2) => {
     let ru,en,name;
     ru = ru_word.value;
     en = en_word.value;
@@ -127,30 +126,27 @@ const first_answer = () => {
           counter_answer_false++;
           wrong_answer.innerHTML = counter_answer_false;
         }
-        answer_word_btn.classList.add("new_answer_word_btn");
-        new_answer_btn = document.querySelector(".new_answer_word_btn");
         if (contrl_to_answer == 0) {
             take_arrays_to_words(num1,response.length_array_word);
             contrl_to_answer++;      
         }
         const forRand = response.length_array_word;
-        console.log(num1);
-        // console.log(forRand);
-        if ( num1.length == 0) {
+        // console.log(num1);
+       
+        if ( num1.length == 1 && (num1.length != num2.length)) {
                 // RundOfArrays(num1,num2,forRand)
               alert(`${name} ваш словарь закончился!`);
-            //   break;
-            counter_answer_true--;
-            correct_answer.innerHTML = counter_answer_true;
+            
+              showHide_flex(answer_word_btn);
+            //   now_answer_word_btn = document.getElementById("now_answer_word_btn");
+              now_answer_word_btn.style.display = "flex";
+            
         }
         else{
             RundOfArrays(num1,num2,forRand)
 
             let next_word = num2[num2.length - 1];
             next_answer(next_word,name);
-            // console.log(`${num1} массив 1 его длинна ${num1.length}`);
-            // console.log(`${num2} массив 2 его длинна ${num2.length}`);
-            
         }
       },
       error: function(error) {
@@ -162,15 +158,17 @@ const first_answer = () => {
 
 
 const next_answer = (next_word,name) => {
-    this.next_word = next_word;
-    this.name = name ;
+    // this.next_word = next_word;
+    // this.name = name ;
+    let name1;
+    name1 = document.querySelector(".username_bar").innerHTML;
     $.ajax({
         type: "POST",
         url: "/next_answer",
         data: { name:name,id_word: next_word},
         type: 'POST',
         success: function(response) {
-          console.log(response.next_word)
+        //   console.log(response.next_word)
           ru_word.value = response.next_word;
         },
         error: function(error) {
@@ -178,3 +176,24 @@ const next_answer = (next_word,name) => {
         }
       });
 }
+
+
+ const now_answer = () => {
+    $.ajax({
+        type: "POST",
+        url: "/now_answer",
+        data: { name:name,word: num1[0]},
+        type: 'POST',
+        success: function(response) {
+        //   console.log(response.next_word)
+          ru_word.value = response.first_word;//первое слово в массиве
+        //   RundOfArrays(num1,num2,forRand)
+        take_arrays_to_words(num1,response.length_array_word);
+            // let next_word = num2[num2.length - 1];
+            // next_answer(next_word,name);
+        },
+        error: function(error) {
+            console.log(error);
+        }
+      });
+ }

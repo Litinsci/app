@@ -1,4 +1,4 @@
-
+;
 var
     header= document.querySelector(".bar"),
     list = document.querySelector(".list"),
@@ -18,15 +18,15 @@ var
     to_add_words_btn= document.getElementById("to_add_words_btn"),
     testing = document.querySelector(".testing");
 
-    let [addit_word_btn,answer_word_btn] = [document.getElementById("addit_word_btn"),document.getElementById("answer_word_btn")];
-    var [ru_word,en_word] = [document.getElementById("ru_word"),document.getElementById("en_word")];
+  let [addit_word_btn,answer_word_btn,now_answer_word_btn] = [document.getElementById("addit_word_btn"),document.getElementById("answer_word_btn"),document.getElementById("now_answer_word_btn")];
+  var [ru_word,en_word] = [document.getElementById("ru_word"),document.getElementById("en_word")];
 
 
   let main_block = document.querySelector("main"),
       counter_answers = document.getElementById("counter");
   let [correct_answer,wrong_answer,counter_answer_true = 0,counter_answer_false = 0] =[document.getElementById("true"),document.getElementById("false")]
 
-  
+  let name = document.querySelector(".username_bar").innerHTML;
 
 en_word.onkeyup = function () {
   var reg = /[а-яА-ЯёЁ^0-9.]/g;
@@ -102,10 +102,22 @@ let new_answer_btn;//`кнопка нового ответа`
 
 // Кнопка ответа через #ID
 answer_word_btn.onclick = function () {
-  first_answer();
-  // console.clear();
+  console.log(num1);
+  console.log(num2);
+  first_answer(num1,num2);
 }
 
+
+now_answer_word_btn.onclick = () =>{
+  console.clear();
+  num1 = [0], num2=[0];
+  counter_answer_true = 0;counter_answer_false = 0;
+  correct_answer.innerHTML = counter_answer_true;wrong_answer.innerHTML = counter_answer_false;
+  now_answer();
+  showHide_flex(answer_word_btn);
+  showHide_flex(now_answer_word_btn);
+  
+}  
 
 
 

@@ -120,5 +120,23 @@ def next_answer():
   return response 
   
   con.commit()
+
+
+@app.route('/now_answer', methods=['POST'])
+def now_answer():
+  name = str(request.form['name'])
+  word = str(request.form['word'])
+  con = sqlite3.connect(db)
+  cur = con.cursor()
+ 
+  id_users = cur.execute("SELECT id FROM users WHERE name=?", (name,)).fetchone()[0]
+  first_word = cur.execute("SELECT rus FROM words WHERE id_user = ? AND id_words = ?", (int(id_users),int(word),)).fetchone()[0]
+  length_array_word  = len(cur.execute("SELECT * FROM words WHERE id_user=?", (id_users,)).fetchall())
+  response = jsonify({ 'first_word' : first_word,'length_array_word' :length_array_word })
+  return response 
+  
+  con.commit()
+
+
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=80, debug=True)
