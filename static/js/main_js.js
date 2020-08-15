@@ -28,6 +28,8 @@ var
 
   let name = document.querySelector(".username_bar").innerHTML;
 
+
+
 en_word.onkeyup = function () {
   var reg = /[а-яА-ЯёЁ^0-9.]/g;
   if (this.value.search(reg) !=  -1) {
@@ -147,9 +149,74 @@ addit_word_btn.onclick = function () {
     }
 });
 }
+let dictionary_block = document.querySelector(".wrapper_to_dictionary"),
+    wrapper= document.querySelector(".wrapper"),click_counter = 0;
 // при загрузке страницы подтянуть значение из бд
+dictionary.onclick = () =>{
+  wrapper.classList.toggle("active_wrapper");
+  dictionary_block.classList.toggle("active_dictionary_block");
+  // togle_animate(wrapper,dictionary_block);
+}
+
+
 
 window.onload = function(){
   load_page();
   console.clear();
+  $('#form_send_msg').on('submit', (e) => {
+    e.preventDefault();
+});
 }
+// SOKET
+
+
+let Chat = document.querySelector(".Chat");
+let chat_bar = document.getElementById("chat");
+let conteiner = document.querySelector(".container");
+let for_soket = 0;
+Chat.onclick = () =>{
+  // alert("f");
+  togle_animate(chat_bar,wrapper,conteiner);
+  // conteiner.style.display = "block";
+  // socket.disconnect();
+  const socket = io.connect('http://127.0.0.1:80');
+  const username = name;
+  if (for_soket == 0) {
+    socket.on('connect', () => {
+      socket.send({'username': 'Service message', 'msg': 'User ' + username + ' has connected!'});
+    });
+    
+  
+    $('#send_msg').on('click', () => {
+      socket.send({
+              'msg': $('#message_input').val(),
+              'username': username
+          });
+      $('#message_input').val('');
+    });
+    $('#send_msg').on('click', () => {
+      socket.send({
+              'msg': $('#message_input').val(),
+              'username': username
+          });
+      $('#message_input').val('');
+    });
+    
+    socket.on('message', data => {
+      if (data.msg.length > 0) {
+          if (data.username === 'Service message') {
+              $('#messages').append(`<li class="text-muted"><strong>${data.username}:</strong> ${data.msg}</li>`);
+          } else {
+              $('#messages').append(`<li><strong>${data.username}:</strong> ${data.msg}</li>`);
+          }
+          console.log('Received message');
+      }
+    });
+    for_soket++;
+  } else {
+    socket.disconnect();
+  }
+  
+}
+//
+

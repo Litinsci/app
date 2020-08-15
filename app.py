@@ -1,10 +1,13 @@
 PYTHONIOENCODING= 'utf8'
 from flask import Flask, render_template, session, redirect, escape, request, abort, flash, jsonify, logging
 import sqlite3, os, time
-
+from flask_socketio import SocketIO,send
 
 # global variable
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'some_secret_key!!'
+
+socketio = SocketIO(app, cors_allowed_origins='*')
 db = 'db.db'
 app.secret_key = "GbcmrfKtcyjujt;f21"
 
@@ -14,6 +17,8 @@ app.secret_key = "GbcmrfKtcyjujt;f21"
 def mainL():
       try:
           if session['username']:
+              # print(session['username'])
+              
               return redirect('/index')
       except:
           return render_template('login.html')
@@ -56,10 +61,18 @@ def unset():
       return render_template('login.html')
 
 
+
+
 @app.route('/index')
 def index():
+      con = sqlite3.connect(db)
+      cur = con.cursor()
       name = session['username']
-      return render_template('main.html',name=name)
+      id_users = cur.execute("SELECT id FROM users WHERE name=?", (session['username'],)).fetchone()[0]
+      rus = cur.execute("SELECT rus FROM words WHERE id_user=?", (id_users,)).fetchall()
+      eng = cur.execute("SELECT eng FROM words WHERE id_user=?", (id_users,)).fetchall()
+      con.commit()
+      return render_template('main.html',name=name,rus = rus,eng = eng)
 # ``````main
 @app.route('/add_words',methods=['POST'])
 def add_words():
@@ -69,7 +82,11 @@ def add_words():
   con = sqlite3.connect(db)
   cur = con.cursor()
   id_users = cur.execute("SELECT id FROM users WHERE name=?", (name,)).fetchone()[0]
-  cur.execute("INSERT INTO words(id_user,rus,eng) VALUES(?,?,?)", (int(id_users),ru_word,en_word,))
+  length_array_word  = len(cur.execute("SELECT * FROM words WHERE id_user=?", (id_users,)).fetchall())
+  if (length_array_word == 0 ):
+    cur.execute("INSERT INTO words(id_user,rus,eng,id_words) VALUES(?,?,?,?)", (int(id_users),ru_word,en_word,0,))
+  else:
+    cur.execute("INSERT INTO words(id_user,rus,eng,id_words) VALUES(?,?,?,?)", (int(id_users),ru_word,en_word,length_array_word,))
   con.commit()
   
 
@@ -138,5 +155,15 @@ def now_answer():
   con.commit()
 
 
+
+
+
+@socketio.on('message')
+def handleMessage(data):
+    print(f"Message: {data}")
+    send(data, broadcast=True)
+
+
+
 if __name__ == '__main__':
-  app.run(host='0.0.0.0', port=80, debug=True)
+  socketio.run( app, port=80, debug=True)
