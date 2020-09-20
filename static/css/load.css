@@ -10,7 +10,9 @@ body {
     overflow: hidden;
     animation: form-fly-up 0.45s ease;
    }
- 
+ h1{
+   text-shadow: 10px 10px 10px black;
+   }
  .module-border-wrap {
     max-width: 250px;
     padding: 1rem;
@@ -120,6 +122,9 @@ body {
    display: flex;
    min-width: 150px;
 }
+.module{
+   text-shadow: 10px 10px 10px black;
+   }
 @keyframes form-fly-up {
    0% { transform: translateY(500px); }
    50% { transform: translateY(-50px); }

@@ -10,44 +10,46 @@ var
     wrap         = document.querySelector(".wrap"),//обёртка кнопки
     wrap1         = document.querySelector(".wrap1"),
     come_in_btn1  = document.querySelector(".come_in_btn1");
+
+let togleObj1 ={
+    construcrorRegistrationObj(bloks,...typeDisplay){
+        let i = 0;
+        for (let block of bloks) {
+            block.style.cssText = `display:${typeDisplay[i]};`;
+            i++;
+        }
+    }
+};
+
 // Переключатели кнопок
 // регистрация первое нажатие
 registration.onclick = function n(){
-    reg_contain.style.cssText = "display:flex;";
-    come_in_btn.style.cssText = "display:none";
-    btn_back.style.cssText = "display:flex";
-    btn_back_in.style.cssText = "display:none";
-    wrap.style.cssText = "animation: none";
-    wrap.style.cssText = "display:none";
-    wrap1.style.cssText = "display:flex";
+    arr = ["flex","none","flex","none","none","flex"];
+    arr1 = [reg_contain,come_in_btn,btn_back,btn_back_in,wrap,wrap1]
+    togleObj1.construcrorRegistrationObj(arr1,...arr);
 } 
+
+
 // кнопка возврата к выбору
 btn_back.onclick = function (){
-    reg_contain.style.cssText = "display:none;";
-    come_in_btn.style.cssText = "display:block";
-    btn_back.style.cssText = "display:none";
-    registration.style.cssText = "display:block";
-    wrap1.style.cssText = "display:none";
+    arr = ["none","block","none","block","none","none"];
+    arr1 = [reg_contain,come_in_btn,btn_back,registration,wrap1,]
+    togleObj1.construcrorRegistrationObj(arr1,...arr);
     wrap.style.cssText = "animation: form-fly-up 0.8s ease;";
 }
 // кнопка первичного входа
 come_in.onclick = function(){
-    // registration.style.cssText = "display:none";
-    btn_back_in.style.cssText = "display:block";
-    to_reg.style.cssText = "display:none";
-    come_in_contain.style.cssText= "display:flex;";
+    arr = ["block","none","flex","none","none","flex"];
+    arr1 = [btn_back_in,to_reg,come_in_contain,come_in_btn,come_in_btn1,]
+    togleObj1.construcrorRegistrationObj(arr1,...arr);
     come_in_btn.style.cssText = "animation: none";
-    come_in_btn.style.cssText = "display:none";
-    come_in_btn1.style.cssText = "display:flex";
 }
 // возврат от первичного входа
 btn_back_in.onclick =function (){
     come_in_btn.style.cssText = "animation: form-fly-up 0.8s ease;";
-    come_in_contain.style.cssText= "display:none;";
-    btn_back_in.style.cssText = "display:none";
-    to_reg.style.cssText = "display:flex";
-    come_in_btn.style.cssText = "display:flex";
-    come_in_btn1.style.cssText = "display:none";
+    arr = ["none","none","flex","flex","none"];
+    arr1 = [come_in_contain,btn_back_in,to_reg,come_in_btn,come_in_btn1,]
+    togleObj1.construcrorRegistrationObj(arr1,...arr)
 }
 // вход и регистрация "logika"
  var
