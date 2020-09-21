@@ -11,11 +11,20 @@ var
     wrap1         = document.querySelector(".wrap1"),
     come_in_btn1  = document.querySelector(".come_in_btn1");
 
+
+
 let togleObj1 ={
     construcrorRegistrationObj(bloks,...typeDisplay){
         let i = 0;
         for (let block of bloks) {
             block.style.cssText = `display:${typeDisplay[i]};`;
+            i++;
+        }
+    },
+    constructorAnimation(blocksAnimate,...typeAnimate){
+        let i = 0;
+        for (let block of blocksAnimate) {
+            block.style.cssText = `animation:${typeAnimate[i]};`;
             i++;
         }
     }
@@ -35,18 +44,34 @@ btn_back.onclick = function (){
     arr = ["none","block","none","block","none","none"];
     arr1 = [reg_contain,come_in_btn,btn_back,registration,wrap1,]
     togleObj1.construcrorRegistrationObj(arr1,...arr);
-    wrap.style.cssText = "animation: form-fly-up 0.8s ease;";
+
+
+    arr1=['form-fly-up 0.8s ease;'];
+    arr=[wrap];
+    togleObj1.constructorAnimation(arr,...arr1);
 }
+
+
 // кнопка первичного входа
 come_in.onclick = function(){
     arr = ["block","none","flex","none","none","flex"];
     arr1 = [btn_back_in,to_reg,come_in_contain,come_in_btn,come_in_btn1,]
     togleObj1.construcrorRegistrationObj(arr1,...arr);
-    come_in_btn.style.cssText = "animation: none";
+
+
+    arr1=['none;'];
+    arr=[come_in_btn];
+    togleObj1.constructorAnimation(arr,...arr1);
 }
+
+
 // возврат от первичного входа
 btn_back_in.onclick =function (){
-    come_in_btn.style.cssText = "animation: form-fly-up 0.8s ease;";
+    arr1=['form-fly-up 0.8s ease;'];
+    arr=[come_in_btn];
+    togleObj1.constructorAnimation(arr,...arr1);
+    
+
     arr = ["none","none","flex","flex","none"];
     arr1 = [come_in_contain,btn_back_in,to_reg,come_in_btn,come_in_btn1,]
     togleObj1.construcrorRegistrationObj(arr1,...arr)
@@ -77,8 +102,6 @@ wrap1.onclick = function () {
                     data: { reg_name: reg_name, reg_pas: reg_pas1},
                     type: 'POST',
                     success: function(response) {
-                        // console.log(response.name);
-                        // alert(response.name);
                         if (response.name == "new") {
                             document.location.replace("/index");
                         }else{
@@ -96,6 +119,9 @@ wrap1.onclick = function () {
         
     }
 }
+
+
+
 // Вход
 //отправкляет имя пользователя и пароль
 // принимает тип имени если 'old' осуществить вход
