@@ -324,12 +324,15 @@ main:hover{
         transition: .5s;
     }
     #chat.active{
-        width: 20vw;
+        width: 300px;
         border-left: 1px solid rgb(214, 214, 214);
         transition: .5s;
+        word-wrap: break-word; 
+        float: right;
     }
     .container{
         display: none;
+        
     }
     .container.active{
         position: fixed;
@@ -338,15 +341,19 @@ main:hover{
     }
     /* #form_send_msg{
         position: fixed;
-        bottom: 10px;
+        bottom: 50px;
     } */
     #send_msg{
-        width: 90%;
+        width: 55%;
         height: 30px;
         border-radius: 10px;
-        margin: 5% 0 5% 5%;
-        background: #ffffff;
+        margin: 5% 0;
+        background: #c0c0c0;
         border: none;
+        color: #333333;
+    }
+    #message_input{
+        width: 49%;
     }
     .form-group{
         margin: 5% 0 5% 5%;
@@ -363,7 +370,25 @@ main:hover{
         font-weight: 700;
     }
     #messages{
-        list-style: none;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap ;
+        width: 400px;
+        word-wrap: break-word; 
+    }
+    #messages p{
+       padding: 10px;
+       width: 270px;
+       box-sizing: border-box;
+       word-wrap: break-word; 
+    }
+    .text-chat{
+        /* display: list-item; */
+        word-wrap: break-word; 
+    }
+    .row{
+        display: flex;
+        flex-direction: column;
     }
 /* adaptiv */
 @media screen and (max-width:750px) {
