@@ -54,14 +54,14 @@ btn_back.onclick = function (){
 
 // кнопка первичного входа
 come_in.onclick = function(){
-    arr = ["block","none","flex","none","none","flex"];
-    arr1 = [btn_back_in,to_reg,come_in_contain,come_in_btn,come_in_btn1,]
-    togleObj1.construcrorRegistrationObj(arr1,...arr);
-
-
     arr1=['none;'];
     arr=[come_in_btn];
     togleObj1.constructorAnimation(arr,...arr1);
+
+
+    arr = ["block","none","flex","none","flex"];
+    arr1 = [btn_back_in,to_reg,come_in_contain,come_in_btn,come_in_btn1]
+    togleObj1.construcrorRegistrationObj(arr1,...arr);
 }
 
 
@@ -71,7 +71,7 @@ btn_back_in.onclick =function (){
     arr=[come_in_btn];
     togleObj1.constructorAnimation(arr,...arr1);
     
-
+    // come_in_btn.style.cssText = "animation: form-fly-up 0.8s ease;";
     arr = ["none","none","flex","flex","none"];
     arr1 = [come_in_contain,btn_back_in,to_reg,come_in_btn,come_in_btn1,]
     togleObj1.construcrorRegistrationObj(arr1,...arr)
@@ -102,6 +102,8 @@ wrap1.onclick = function () {
                     data: { reg_name: reg_name, reg_pas: reg_pas1},
                     type: 'POST',
                     success: function(response) {
+                        // console.log(response.name);
+                        // alert(response.name);
                         if (response.name == "new") {
                             document.location.replace("/index");
                         }else{
