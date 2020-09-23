@@ -72,7 +72,7 @@ def index():
       rus = cur.execute("SELECT rus FROM words WHERE id_user=?", (id_users,)).fetchall()
       eng = cur.execute("SELECT eng FROM words WHERE id_user=?", (id_users,)).fetchall()
       con.commit()
-      return render_template('main.html',name=name,rus = rus,eng = eng)
+      return render_template('main.html',name=name,rus = rus,eng = eng,i = 0)
 # ``````main
 @app.route('/add_words',methods=['POST'])
 def add_words():

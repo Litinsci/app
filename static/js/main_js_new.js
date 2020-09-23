@@ -56,6 +56,9 @@ exit.onclick = function () {
 
 // 
 let togleCssObj = {
+    // bloks - блоки к которым применяются стили 
+    // CssRuls - css свойства которые будут преминяться
+    // typeDisplay - правила к свойствам
     cssTogle(bloks, CssRuls, ...typeDisplay) {
         let i = 0;
         for (let block of bloks) {
@@ -63,7 +66,9 @@ let togleCssObj = {
             i++;
         }
     },
-    showHideTBlock(TypeToSwetch,...bloks){
+    // TypeToSwetch -тип переключателя (та на что преключаем)
+    // bloks - блоки к которым применяем переключение
+    showHideBlock(TypeToSwetch, ...bloks) {
         let i = 0;
         if (bloks[0].style.display == "none") {
             for (let element of bloks) {
@@ -81,31 +86,33 @@ let togleCssObj = {
 
 
 hide_panel.onclick = function () {
-    icons.style.display = "none";
-    header.style.width = "7%";
-    main_block.style.cssText = "margin: 10% 15% 5% 33%";
-    counter_answers.style.cssText = "margin: 10% 15% 5% 33%";
-    // showHide_flex(list);
-    // showHide_flex(icons);
-    togleCssObj.showHideTBlock("flex",list);
-    togleCssObj.showHideTBlock("flex",icons);
+    let bloks = [icons, header, main_block, counter_answers],
+        CssRuls = ['display', 'width', 'margin', 'margin'],
+        typeDisplay = ['none', '7%', '10% 15% 5% 33%', '10% 15% 5% 33%'];
+
+    togleCssObj.cssTogle(bloks, CssRuls, ...typeDisplay);
+    togleCssObj.showHideBlock("flex", list);
+    togleCssObj.showHideBlock("flex", icons);
 }
 
 
 fa_ellipsis_h.onclick = function () {
-    header.style.width = "20%";
-    main_block.style.cssText = "margin: 10% 15% 5% 20%";
-    counter_answers.style.cssText = "margin: 10% 15% 5% 20%";
-    // showHide_flex(list);
-    // showHide_flex(icons);
-    togleCssObj.showHideTBlock("flex",list);
-    togleCssObj.showHideTBlock("flex",icons);
+    let bloks = [header, main_block, counter_answers],
+        CssRuls = ['width', 'margin', 'margin'],
+        typeDisplay = ['20%', '10% 15% 5% 20%', '10% 15% 5% 20%'];
+
+    togleCssObj.cssTogle(bloks, CssRuls, ...typeDisplay);
+
+    togleCssObj.showHideBlock("flex", list);
+    togleCssObj.showHideBlock("flex", icons);
 }
 
 
 
 
 addit_word_btn.setAttribute("disabled", "true");
+
+
 // переход от ответа к добавлению
 test_list_btn.onclick = function () {
     togle_animate(to_add_words, test_list, addit_word_btn, answer_word_btn, ru_word, en_word);
@@ -134,8 +141,6 @@ let new_answer_btn; //`кнопка нового ответа`
 
 // Кнопка ответа через #ID
 answer_word_btn.onclick = function () {
-    console.log(num1);
-    console.log(num2);
     first_answer(num1, num2);
 }
 
@@ -192,13 +197,14 @@ let dictionary_block = document.querySelector(".wrapper_to_dictionary"),
     click_counter = 0;
 // при загрузке страницы подтянуть значение из бд
 
-
+let popup = document.querySelector('.popup'),
+    closeBtn = document.querySelector('.close');
 dictionary.onclick = () => {
-    wrapper.classList.toggle("active_wrapper");
-    dictionary_block.classList.toggle("active_dictionary_block");
-    // togle_animate(wrapper,dictionary_block);
+    popup.style.display ="block";
 }
-
+closeBtn.onclick = () =>{
+    popup.style.display ="none";
+}
 
 
 window.onload = function () {

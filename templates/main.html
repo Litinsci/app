@@ -66,8 +66,30 @@
             </div>
         </main>
     </div>
-    <div class="wrapper_to_dictionary">
-        <ul id="dictionary_ru">
+    <div class="wrapper_to_dictionary popup">
+        <div class="popup-content">
+            <div class="popup-header">
+                <h2>some text</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="popup-body">
+                <ul id="dictionary_ru">
+                    {% for ru in rus %}
+                    <li class= "{{ loop.index }}">{{ru[0]}}</li>
+                    {% endfor %}
+                </ul>
+                <ul id="dictionary_en">
+                    {% for en in eng %}
+                    <li class= "{{ loop.index }}">{{en[0]}}</li>
+                    {% endfor %}
+                </ul> 
+            </div>
+            <div class="popup-footer">
+                <h3>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Harum maiores atque possimus temporibus, provident modi et fuga, sunt repellat id odio delectus minima nam? Assumenda praesentium consectetur doloremque commodi sit.</h3>
+            </div>
+        </div>
+        
+        <!-- <ul id="dictionary_ru">
             {% for ru in rus %}
             <li>{{ru[0]}}</li>
             {% endfor %}
@@ -76,7 +98,8 @@
             {% for en in eng %}
             <li>{{en[0]}}</li>
             {% endfor %}
-        </ul>
+        </ul> -->
+        
     </div>
     <div id="chat">
         <div class="container">

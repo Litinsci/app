@@ -74,15 +74,7 @@ const contains = (arr, elem) => {
     }
     return false;
 }
-// // удаление эллемента из массива по значению
-// const removeItem = (array, item) => {
-//     for (var i in array) {
-//         if (array[i] == item) {
-//             array.splice(i, 1);
-//             break;
-//         }
-//     }
-// }
+
 // ````` try`````
 // ````` fuck this function ``````
 
@@ -136,14 +128,14 @@ const first_answer = (num1, num2) => {
                 contrl_to_answer++;
             }
             const forRand = response.length_array_word;
-            // console.log(num1);
+            
 
             if (num1.length == 1 && (num1.length != num2.length)) {
-                // RundOfArrays(num1,num2,forRand)
+               
                 alert(`${name} ваш словарь закончился!`);
 
                 showHide_flex(answer_word_btn);
-                //   now_answer_word_btn = document.getElementById("now_answer_word_btn");
+               
                 now_answer_word_btn.style.display = "flex";
 
             } else {
@@ -162,8 +154,7 @@ const first_answer = (num1, num2) => {
 
 
 const next_answer = (next_word, name) => {
-    // this.next_word = next_word;
-    // this.name = name ;
+   
     let name1;
     name1 = document.querySelector(".username_bar").innerHTML;
     $.ajax({
@@ -175,7 +166,7 @@ const next_answer = (next_word, name) => {
         },
         type: 'POST',
         success: function (response) {
-            //   console.log(response.next_word)
+            
             ru_word.value = response.next_word;
         },
         error: function (error) {
@@ -195,12 +186,11 @@ const now_answer = () => {
         },
         type: 'POST',
         success: function (response) {
-            //   console.log(response.next_word)
+        
             ru_word.value = response.first_word; //первое слово в массиве
-            //   RundOfArrays(num1,num2,forRand)
+          
             take_arrays_to_words(num1, response.length_array_word);
-            // let next_word = num2[num2.length - 1];
-            // next_answer(next_word,name);
+
         },
         error: function (error) {
             console.log(error);
