@@ -166,4 +166,4 @@ def handleMessage(data):
 
 
 if __name__ == '__main__':
-  socketio.run( app, port=81, debug=True)
+  socketio.run( app, port=80, debug=True)

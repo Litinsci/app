@@ -1,4 +1,5 @@
-;
+'use strict';
+
 var
     header = document.querySelector(".bar"),
     list = document.querySelector(".list"),
@@ -54,45 +55,19 @@ exit.onclick = function () {
     document.location.replace("/unsetsession");
 }
 
-// 
-let togleCssObj = {
-    // bloks - блоки к которым применяются стили 
-    // CssRuls - css свойства которые будут преминяться
-    // typeDisplay - правила к свойствам
-    cssTogle(bloks, CssRuls, ...typeDisplay) {
-        let i = 0;
-        for (let block of bloks) {
-            block.style.cssText = `${CssRuls[i]}:${typeDisplay[i]};`;
-            i++;
-        }
-    },
-    // TypeToSwetch -тип переключателя (та на что преключаем)
-    // bloks - блоки к которым применяем переключение
-    showHideBlock(TypeToSwetch, ...bloks) {
-        let i = 0;
-        if (bloks[0].style.display == "none") {
-            for (let element of bloks) {
-                element.style.display = `${TypeToSwetch}`;
-            }
-        } else {
-            for (let element of bloks) {
-                element.style.display = "none";
-            }
-        }
-    }
-
-};
-// 
-
 
 hide_panel.onclick = function () {
     let bloks = [icons, header, main_block, counter_answers],
         CssRuls = ['display', 'width', 'margin', 'margin'],
         typeDisplay = ['none', '7%', '10% 15% 5% 33%', '10% 15% 5% 33%'];
 
-    togleCssObj.cssTogle(bloks, CssRuls, ...typeDisplay);
-    togleCssObj.showHideBlock("flex", list);
-    togleCssObj.showHideBlock("flex", icons);
+    const objToHede = new ChangesBlock(bloks, CssRuls, undefined, typeDisplay);
+    objToHede.cssTogle();
+    objToHede.getParamsShowHide("flex", [list]);
+    objToHede.showHideBlock();
+    objToHede.getParamsShowHide("flex", [icons]);
+    objToHede.showHideBlock();
+
 }
 
 
@@ -101,10 +76,13 @@ fa_ellipsis_h.onclick = function () {
         CssRuls = ['width', 'margin', 'margin'],
         typeDisplay = ['20%', '10% 15% 5% 20%', '10% 15% 5% 20%'];
 
-    togleCssObj.cssTogle(bloks, CssRuls, ...typeDisplay);
 
-    togleCssObj.showHideBlock("flex", list);
-    togleCssObj.showHideBlock("flex", icons);
+    const objToFaList = new ChangesBlock(bloks, CssRuls, undefined, typeDisplay);
+    objToFaList.cssTogle();
+    objToFaList.getParamsShowHide("flex", [list]);
+    objToFaList.showHideBlock();
+    objToFaList.getParamsShowHide("flex", [icons]);
+    objToFaList.showHideBlock();
 }
 
 
@@ -200,10 +178,10 @@ let dictionary_block = document.querySelector(".wrapper_to_dictionary"),
 let popup = document.querySelector('.popup'),
     closeBtn = document.querySelector('.close');
 dictionary.onclick = () => {
-    popup.style.display ="block";
+    popup.style.display = "block";
 }
-closeBtn.onclick = () =>{
-    popup.style.display ="none";
+closeBtn.onclick = () => {
+    popup.style.display = "none";
 }
 
 
@@ -226,7 +204,7 @@ Chat.onclick = () => {
     togle_animate(chat_bar, wrapper, conteiner);
     // conteiner.style.display = "block";
     // socket.disconnect();
-    const socket = io.connect('http://127.0.0.1:81');
+    const socket = io.connect('http://127.0.0.1:80');
     const username = name;
     if (for_soket == 0) {
         socket.on('connect', () => {

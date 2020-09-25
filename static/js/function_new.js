@@ -1,31 +1,58 @@
-;
+'use strict';
 
-function showHide() {
-    if (arguments[0].style.display == "none") {
-        for (let element of arguments) {
-            element.style.display = "block";
-        }
-    } else {
-        for (let element of arguments) {
-            element.style.display = "none";
+// 
+class ChangesBlock {
+    constructor(bloks, CssRuls, TypeToSwetch, typeDisplay) {
+        this.bloks = bloks;
+        this.CssRuls = CssRuls;
+        this.TypeToSwetch = TypeToSwetch;
+        this.typeDisplay = typeDisplay;
+
+    }
+
+
+    // bloks - блоки к которым применяются стили 
+    // CssRuls - css свойства которые будут преминяться
+    // typeDisplay - правила к свойствам
+    cssTogle() {
+        let i = 0;
+        for (let block of this.bloks) {
+            block.style.cssText = `${this.CssRuls[i]}:${this.typeDisplay[i]};`;
+            i++;
         }
     }
-}
 
 
-function showHide_flex() {
-    if (arguments[0].style.display == "none") {
-        for (let element of arguments) {
-            element.style.display = "flex";
-        }
-    } else {
-        for (let element of arguments) {
-            element.style.display = "none";
+    // TypeToSwetch -тип переключателя (та на что преключаем)
+    // bloks - блоки к которым применяем переключение
+    getParamsShowHide(displayHS, bloksHS) {
+        this.bloksHS = bloksHS;
+        this.displayHS = displayHS;
+
+    }
+
+
+    showHideBlock() {
+        console.log(this.bloksHS)
+        let i = 0;
+        if (this.bloksHS[0].style.display == "none") {
+            for (let element of this.bloksHS) {
+                element.style.display = `${this.displayHS}`;
+            }
+        } else {
+            for (let element of this.bloksHS) {
+                element.style.display = "none";
+            }
         }
     }
+
+    // togle_animate() {
+    //     for (let element of this.bloks) {
+    //         element.classList.toggle("active");
+    //     }
+    // }
 }
-
-
+// 
 const togle_animate = function () {
     for (let element of arguments) {
         element.classList.toggle("active");
@@ -128,14 +155,14 @@ const first_answer = (num1, num2) => {
                 contrl_to_answer++;
             }
             const forRand = response.length_array_word;
-            
+
 
             if (num1.length == 1 && (num1.length != num2.length)) {
-               
+
                 alert(`${name} ваш словарь закончился!`);
 
                 showHide_flex(answer_word_btn);
-               
+
                 now_answer_word_btn.style.display = "flex";
 
             } else {
@@ -154,7 +181,7 @@ const first_answer = (num1, num2) => {
 
 
 const next_answer = (next_word, name) => {
-   
+
     let name1;
     name1 = document.querySelector(".username_bar").innerHTML;
     $.ajax({
@@ -166,7 +193,7 @@ const next_answer = (next_word, name) => {
         },
         type: 'POST',
         success: function (response) {
-            
+
             ru_word.value = response.next_word;
         },
         error: function (error) {
@@ -186,9 +213,9 @@ const now_answer = () => {
         },
         type: 'POST',
         success: function (response) {
-        
+
             ru_word.value = response.first_word; //первое слово в массиве
-          
+
             take_arrays_to_words(num1, response.length_array_word);
 
         },
